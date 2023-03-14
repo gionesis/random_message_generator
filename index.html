@@ -9,18 +9,15 @@
   <body>
     <button id="button">Call bonnie</button>
     <script>
-      const speak = window.speechSynthesis.speak;
-      const utterance = new window.SpeechSynthesisUtterance();
+      const utterance = new SpeechSynthesisUtterance();
       const message = "Hey Bonnie!";
 
       const logMessage = () => {
         utterance.text = message;
-        speak(utterance);
+        window.speechSynthesis.speak(utterance);
       };
 
       document.getElementById("button").addEventListener("click", logMessage);
-
-
     </script>
   </body>
 </html>
