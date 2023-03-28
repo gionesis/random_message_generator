@@ -8,16 +8,40 @@
   </head>
   <body>
     <button id="button">Call bonnie</button>
+    <button src ="//www.google.com/search?q=maia&sxsrf=AJOqlzVpqARbDktDpE8f5kFI1d1HbOvSLA%3A1678830110502&source=hp&ei=HuoQZL7sG5Pn7_UPh9aB0Ag&iflsig=AK50M_UAAAAAZBD4Lh_NhE9DnMV2dUNYnvWbLl2FWGTQ&ved=0ahUKEwi-8_zCsdz9AhWT87sIHQdrAIoQ4dUDCAg&uact=5&oq=maia&gs_lcp=Cgdnd3Mtd2l6EAMyBAguEEMyBAguEEMyBAgAEEMyBQguEIAEMgUILhCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEOgQIIxAnOgsILhCABBDHARDRAzoICC4QgAQQ1AI6CgguEMcBENEDEEM6BggAEAoQQ1AAWOwCYLUNaABwAHgAgAFziAGTA5IBAzIuMpgBAKABAQ&sclient=gws-wiz">maia</button>
     <script>
       const utterance = new SpeechSynthesisUtterance();
-      const message = "Hey Bonnie!";
+      const baseMessage = "Hey Bonnie";
+      const messages = ['fetch!', 'Come here!', 'Sit!', 'lay!']
 
-      const logMessage = () => {
-        utterance.text = message;
-        window.speechSynthesis.speak(utterance);
+      const getRandomElementFromArray = (array) => {
+        const randomIndex = Math.floor(Math.random() * array.length + 1)
+
+        console.log(randomIndex)
+        
+        const result = array[randomIndex]
+
+        if (!result) {
+          throw new Error('Result is missing!')
+        }
+
+        return result
+      }
+
+      const speakMessage = () => {
+        try {
+          const randomMessage = getRandomElementFromArray(messages)
+          utterance.text = `${baseMessage}, ${randomMessage}`;
+        } catch (error) {
+          console.log(error.message)
+          utterance.text = `Oh no there is error, ${error.message}`;
+        } finally {
+          window.speechSynthesis.speak(utterance);
+        }
       };
+      
+      document.getElementById("button").addEventListener("click", speakMessage);
 
-      document.getElementById("button").addEventListener("click", logMessage);
     </script>
   </body>
 </html>
